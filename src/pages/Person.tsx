@@ -22,11 +22,14 @@ export default function Person() {
     return <div className="app-page"><header className="app-header"><Logo /><div className="header-actions"><LanguageButton /><VoiceButton /></div></header><main className="empty-state">{t("personNotFound")}</main><BottomNav /></div>;
   }
 
+  const selectedPerson = person;
+  const selectedStory = story;
+
   async function ask() {
     if (!question.trim()) return;
     setLoading(true);
     try {
-      const response = await askStory(story, question, person, language);
+      const response = await askStory(selectedStory, question, selectedPerson, language);
       setAnswer(response.answer);
     } catch {
       setAnswer(t("noStoryAnswer"));
