@@ -139,9 +139,17 @@ function CameraController({ selectedIndex, exploring }: { selectedIndex: number;
   const lookAt = useRef(new THREE.Vector3(...roomCamera.target));
 
   useFrame(() => {
-    const destination = exploring ? cameraTargets[selectedIndex] || cameraTargets[0] : roomCamera;
-    targetPosition.current.set(...destination.position);
-    targetLookAt.current.set(...destination.target);
+    const destination = exploring ? (cameraTargets[selectedIndex] ?? cameraTargets[0]) : roomCamera;
+    targetPosition.current.set(
+      destination.position[0],
+      destination.position[1],
+      destination.position[2],
+    );
+    targetLookAt.current.set(
+      destination.target[0],
+      destination.target[1],
+      destination.target[2],
+    );
 
     camera.position.lerp(targetPosition.current, exploring ? 0.045 : 0.035);
     lookAt.current.lerp(targetLookAt.current, 0.055);
